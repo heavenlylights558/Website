@@ -1,0 +1,18 @@
+/* Shared styles for artwork images used on product pages */
+.product-details__art {
+  width: min(300px, 72%);
+  height: auto;
+  filter: drop-shadow(0 22px 28px rgba(107, 84, 57, 0.28));
+  animation: artFloat 6s ease-in-out infinite;
+}
+
+@keyframes artFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-details__art {
+    animation: none;
+  }
+}

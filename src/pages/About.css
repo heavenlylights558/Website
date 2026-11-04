@@ -1,0 +1,46 @@
+.about-hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.about-hero__image svg {
+  width: 100%;
+  max-width: 260px;
+  margin-left: auto;
+}
+
+.about-section {
+  padding: 56px 0;
+}
+
+.about-block {
+  max-width: 680px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.about-grid .about-block {
+  max-width: none;
+}
+
+@media (max-width: 860px) {
+  .about-hero {
+    grid-template-columns: 1fr;
+  }
+  .about-hero__image {
+    order: -1;
+  }
+  .about-hero__image svg {
+    margin: 0 auto;
+  }
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}

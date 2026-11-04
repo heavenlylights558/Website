@@ -1,0 +1,111 @@
+.footer-candle {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  height: 330px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.footer-candle__svg {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Flame flicker */
+.fc-flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flameFlicker 1.9s ease-in-out infinite;
+}
+
+.fc-flame__core {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: coreFlicker 1.3s ease-in-out infinite;
+}
+
+.fc-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* Smoke wisps */
+.fc-smoke path {
+  stroke-dasharray: 70;
+  stroke-dashoffset: 70;
+  opacity: 0;
+  animation: smokeRise 5s ease-in-out infinite;
+}
+
+/* Scent icons wafting upward from the flame */
+.footer-candle__waft {
+  position: absolute;
+  left: calc(50% + var(--x));
+  bottom: 168px;
+  width: var(--size);
+  height: var(--size);
+  object-fit: contain;
+  opacity: 0;
+  z-index: 2;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+  animation: wafting var(--duration) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes flameFlicker {
+  0%, 100% { transform: scale(1, 1) skewX(0deg); }
+  20% { transform: scale(0.95, 1.07) skewX(2.5deg); }
+  40% { transform: scale(1.04, 0.95) skewX(-2deg); }
+  60% { transform: scale(0.97, 1.05) skewX(1.5deg); }
+  80% { transform: scale(1.02, 0.97) skewX(-1deg); }
+}
+
+@keyframes coreFlicker {
+  0%, 100% { transform: scale(1, 1); opacity: 0.92; }
+  50% { transform: scale(0.9, 1.1); opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.75; transform: scale(0.94); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes smokeRise {
+  0% { stroke-dashoffset: 70; opacity: 0; transform: translateY(8px); }
+  25% { opacity: 0.45; }
+  70% { opacity: 0.2; }
+  100% { stroke-dashoffset: -70; opacity: 0; transform: translateY(-12px); }
+}
+
+@keyframes wafting {
+  0% { opacity: 0; transform: translate(-50%, 0) scale(0.4) rotate(0deg); }
+  15% { opacity: 1; }
+  55% { opacity: 1; transform: translate(calc(-50% + var(--sway)), -80px) scale(0.95) rotate(var(--rot)); }
+  100% { opacity: 0; transform: translate(calc(-50% - var(--sway)), -150px) scale(1.05) rotate(calc(var(--rot) * -1)); }
+}
+
+@media (max-width: 760px) {
+  .footer-candle {
+    height: 300px;
+    max-width: 280px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fc-flame,
+  .fc-flame__core,
+  .fc-glow {
+    animation: none;
+  }
+  .fc-smoke,
+  .footer-candle__waft {
+    display: none;
+  }
+}
