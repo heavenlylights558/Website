@@ -60,7 +60,7 @@ const differentiators = [
   },
   {
     title: "Long Burn Time",
-    text: "Up to 40+ hours of steady, even burning per candle.",
+    text: "Burns for 20, 30 or 60 hours, depending on the size you choose.",
     image: iconBurnTime,
   },
   {

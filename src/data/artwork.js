@@ -26,15 +26,16 @@ export const flavours = [
   { id: "jasmine", name: "Jasmine", note: "Delicate & elegant", image: jasmine },
 ];
 
-// Product id -> image (ids come from src/data/products.js)
-export const productArt = {
-  "vanilla-bliss": vanilla,
-  "lavender-calm": lavender,
-  "rose-glow": rose,
-  "coffee-aroma": candleAutumn,
-  "sandalwood-serenity": sandalwood,
-  "christmas-glow": candleAdventWreath,
-};
+// Product label images: src/assets/labels/<product-id>-<grams>.webp
+const labelFiles = import.meta.glob("../assets/labels/*.webp", {
+  eager: true,
+  import: "default",
+});
+
+// labelImage("lavender", 150) -> URL of the 150g Lavender label (or undefined)
+export function labelImage(productId, grams) {
+  return labelFiles[`../assets/labels/${productId}-${grams}.webp`];
+}
 
 // Category id -> image (ids come from src/data/categories.js)
 export const categoryArt = {

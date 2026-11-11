@@ -1,32 +1,37 @@
 import { Link } from "react-router-dom";
-import { productArt } from "../data/artwork";
+import { labelImage } from "../data/artwork";
+import { formatPrice } from "../data/products";
 import "./ProductCard.css";
 
 function ProductCard({ product }) {
-  const { id, name, type, description, price } = product;
-  const art = productArt[id];
+  const { id, name, type, description, sizes } = product;
+  const startSize = sizes[0];
+  const art = labelImage(id, startSize.grams);
 
   return (
     <article className="product-card">
-      <div className="product-card__image" aria-hidden="true">
-        {art ? (
-          <img src={art} alt="" className="product-card__art" loading="lazy" />
-        ) : (
-          <svg viewBox="0 0 120 140" className="product-card__jar">
-            <ellipse cx="60" cy="34" rx="10" ry="16" fill="var(--color-gold)" opacity="0.8" />
-            <rect x="24" y="46" width="72" height="82" rx="14" fill="var(--color-cream-deep)" />
-            <rect x="24" y="46" width="72" height="82" rx="14" fill="none" stroke="var(--color-brown)" strokeOpacity="0.25" />
-            <rect x="36" y="60" width="48" height="6" rx="3" fill="var(--color-white)" opacity="0.6" />
-          </svg>
+      <Link to={`/products/${id}`} className="product-card__image" aria-label={`${name} candle`}>
+        {art && (
+          <img
+            src={art}
+            alt={`${name} candle label`}
+            className="product-card__art"
+            loading="lazy"
+          />
         )}
-      </div>
+      </Link>
 
       <div className="product-card__body">
         <span className="product-card__type">{type}</span>
         <h3>{name}</h3>
         <p>{description}</p>
+        <p className="product-card__sizes">
+          {sizes.map((size) => `${size.grams}g`).join(" · ")}
+        </p>
         <div className="product-card__footer">
-          <span className="product-card__price">{price}</span>
+          <span className="product-card__price">
+            <small>From</small> {formatPrice(startSize.price)}
+          </span>
           <Link to={`/products/${id}`} className="product-card__link">
             View Details
           </Link>

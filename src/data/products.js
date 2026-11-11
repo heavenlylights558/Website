@@ -1,104 +1,85 @@
-// Sample product data for Heavenly Lights.
-// Replace this array with data fetched from a backend/API later —
-// every component reads from here, so nothing else needs to change.
+// Product data for Heavenly Lights.
+// Every component reads from here, so edit prices, sizes and text in this one file.
+// Label images live in src/assets/labels/<id>-<grams>.webp
+
+// The same three sizes are offered for every fragrance.
+export const sizeTiers = [
+  { grams: 100, price: 100, hours: 20 },
+  { grams: 150, price: 140, hours: 30 },
+  { grams: 250, price: 180, hours: 60 },
+];
+
+const commonFeatures = [
+  "Hand-poured in small batches",
+  "Available in 100g, 150g and 250g",
+  "Burns for up to 20, 30 or 60 hours depending on size",
+];
 
 const products = [
   {
-    id: "vanilla-bliss",
-    name: "Vanilla Bliss",
+    id: "lavender",
+    name: "Lavender",
     type: "Scented Candle",
-    fragrance: "Warm vanilla bean, sandalwood base",
-    price: "₹499",
-    description:
-      "A cozy, comforting scent that fills your room with warm vanilla and a soft hint of spice.",
-    sizes: ["Small (100g)", "Medium (200g)", "Large (350g)"],
-    features: [
-      "Hand-poured in small batches",
-      "Soy wax blend for a clean, even burn",
-      "Cotton wick, lead-free",
-      "Approx. 30–35 hours burn time",
-    ],
-  },
-  {
-    id: "lavender-calm",
-    name: "Lavender Calm",
-    type: "Soy Candle",
-    fragrance: "French lavender, chamomile",
-    price: "₹549",
+    fragrance: "Soothing lavender fields",
     description:
       "A gentle floral fragrance designed to ease the mind at the end of a long day.",
-    sizes: ["Small (100g)", "Medium (200g)", "Large (350g)"],
-    features: [
-      "100% natural soy wax",
-      "Calming lavender essential oil blend",
-      "Reusable glass jar",
-      "Approx. 35–40 hours burn time",
-    ],
   },
   {
-    id: "rose-glow",
-    name: "Rose Glow",
-    type: "Jar Candle",
-    fragrance: "Bulgarian rose, soft musk",
-    price: "₹599",
-    description:
-      "A romantic, delicate rose fragrance housed in a warm amber glass jar.",
-    sizes: ["Medium (200g)", "Large (350g)"],
-    features: [
-      "Long-lasting floral fragrance",
-      "Amber glass jar, reusable after use",
-      "Hand-poured and hand-finished",
-      "Approx. 35 hours burn time",
-    ],
-  },
-  {
-    id: "coffee-aroma",
-    name: "Coffee Aroma",
+    id: "rose",
+    name: "Rose",
     type: "Scented Candle",
-    fragrance: "Roasted coffee bean, cocoa",
-    price: "₹529",
+    fragrance: "Fresh, romantic garden rose",
     description:
-      "A rich, energizing coffee-house scent, perfect for mornings and study spaces.",
-    sizes: ["Small (100g)", "Medium (200g)"],
-    features: [
-      "Deep, rich roasted-coffee fragrance",
-      "Soy wax blend",
-      "Cotton wick, lead-free",
-      "Approx. 30 hours burn time",
-    ],
+      "A delicate, romantic rose fragrance that makes any room feel warm and welcoming.",
   },
   {
-    id: "sandalwood-serenity",
-    name: "Sandalwood Serenity",
-    type: "Decorative Candle",
-    fragrance: "Sandalwood, warm amber",
-    price: "₹649",
+    id: "sandalwood",
+    name: "Sandalwood",
+    type: "Scented Candle",
+    fragrance: "Warm, creamy sandalwood",
     description:
-      "An earthy, grounding fragrance in a sculpted decorative vessel that doubles as home decor.",
-    sizes: ["Medium (200g)", "Large (350g)"],
-    features: [
-      "Decorative hand-finished vessel",
-      "Woody, grounding fragrance",
-      "Makes a thoughtful gift",
-      "Approx. 40 hours burn time",
-    ],
+      "A grounding, woody fragrance that brings quiet calm to prayer corners and living rooms alike.",
   },
   {
-    id: "christmas-glow",
-    name: "Christmas Glow",
-    type: "Festival / Seasonal Candle",
-    fragrance: "Cinnamon, pine, orange peel",
-    price: "₹579",
+    id: "jasmine",
+    name: "Jasmine",
+    type: "Scented Candle",
+    fragrance: "Delicate white jasmine blossom",
     description:
-      "A festive blend of warm spice and pine, made to bring seasonal cheer into your home.",
-    sizes: ["Small (100g)", "Medium (200g)", "Large (350g)"],
-    features: [
-      "Limited seasonal fragrance blend",
-      "Gift-ready packaging",
-      "Soy wax blend",
-      "Approx. 35 hours burn time",
-    ],
+      "An elegant, uplifting floral scent inspired by fresh jasmine in bloom.",
   },
-];
+  {
+    id: "lemon",
+    name: "Lemon",
+    type: "Scented Candle",
+    fragrance: "Bright, zesty lemon",
+    description:
+      "A fresh, clean citrus fragrance that lifts the mood and brightens any space.",
+  },
+  {
+    id: "vanilla",
+    name: "Vanilla",
+    type: "Scented Candle",
+    fragrance: "Warm, creamy vanilla bean",
+    description:
+      "A cozy, comforting scent that fills your room with warm vanilla and a gentle sweetness.",
+  },
+  {
+    id: "spiced-apple",
+    name: "Spiced Apple",
+    type: "Scented Candle",
+    fragrance: "Crisp red apple with warm spice",
+    description:
+      "A cozy blend of crisp apple and gentle spice, perfect for cooler evenings.",
+  },
+].map((product) => ({
+  ...product,
+  features: commonFeatures,
+  sizes: sizeTiers,
+}));
+
+export function formatPrice(amount) {
+  return `₹${amount}`;
+}
 
 export default products;

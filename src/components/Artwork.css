@@ -1,18 +1,32 @@
 /* Shared styles for artwork images used on product pages */
 .product-details__art {
-  width: min(300px, 72%);
+  display: block;
+  width: 100%;
+  max-width: 460px;
   height: auto;
-  filter: drop-shadow(0 22px 28px rgba(107, 84, 57, 0.28));
-  animation: artFloat 6s ease-in-out infinite;
+  margin: 0 auto;
+  border-radius: 14px;
+  box-shadow: 0 22px 40px rgba(107, 84, 57, 0.22);
 }
 
-@keyframes artFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+.product-details__facts {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin: 0 0 22px;
+  padding: 14px 0;
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .product-details__art {
-    animation: none;
-  }
+.product-details__fact span {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-brown);
+}
+
+.product-details__fact strong {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--color-navy);
 }
