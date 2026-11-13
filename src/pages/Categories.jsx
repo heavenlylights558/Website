@@ -1,11 +1,15 @@
 import CategoryCard from "../components/CategoryCard";
 import categories from "../data/categories";
+import { CandleCluster, SingleCandle } from "../components/CandleScene";
 import "./Categories.css";
 
 function Categories() {
   return (
     <div className="categories-page">
-      <div className="container page-hero">
+      <div className="container page-hero page-hero--candles">
+        <div className="page-hero__candles" aria-hidden="true">
+          <CandleCluster />
+        </div>
         <span className="eyebrow-plain">Find Your Kind</span>
         <h1>Candle Categories</h1>
         <p>

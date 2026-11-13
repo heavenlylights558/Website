@@ -100,10 +100,28 @@
 }
 
 /* Fragrance cards */
+/* Centred rows: 7 cards show as 4 + 3 on desktop */
 .catalog-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 24px;
+}
+
+.catalog-card {
+  flex: 0 0 calc((100% - 72px) / 4);
+}
+
+@media (max-width: 900px) {
+  .catalog-card {
+    flex-basis: calc((100% - 24px) / 2);
+  }
+}
+
+@media (max-width: 520px) {
+  .catalog-card {
+    flex-basis: 100%;
+  }
 }
 
 .catalog-card {
@@ -154,6 +172,7 @@
 .catalog-card__body p {
   font-size: 0.88rem;
   margin: 0 0 14px;
+  min-height: 2.9em; /* keeps the facts rows aligned across cards */
 }
 
 .catalog-card__facts {
@@ -290,9 +309,6 @@
     grid-template-columns: 1fr;
     gap: 28px;
     margin-bottom: 56px;
-  }
-  .catalog-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
   .catalog-table th,
   .catalog-table td {

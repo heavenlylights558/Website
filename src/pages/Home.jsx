@@ -9,6 +9,7 @@ import iconNaturalWax from "../assets/icon-natural-wax.png";
 import iconMadeInIndia from "../assets/icon-made-in-india.png";
 import iconBurnTime from "../assets/icon-burn-time.webp";
 import FragranceStrip from "../components/FragranceStrip";
+import { CandleCluster, SingleCandle } from "../components/CandleScene";
 import "./Home.css";
 
 const featured = products.slice(0, 3);
@@ -227,15 +228,8 @@ function Home() {
       <section className="section section--alt about-snippet">
         <div className="container about-snippet__grid">
           <div className="about-snippet__image" aria-hidden="true">
-            <svg viewBox="0 0 200 200">
-              <circle cx="100" cy="100" r="96" fill="var(--color-cream-deep)" />
-              <path
-                d="M100 44c11 16 16.5 27 16.5 37a16.5 16.5 0 1 1-33 0C83.5 71 89 60 100 44Z"
-                fill="var(--color-gold)"
-              />
-              <rect x="72" y="90" width="56" height="70" rx="10" fill="var(--color-white)" opacity="0.7" />
-            </svg>
-          </div>
+          <CandleCluster />
+        </div>
           <div>
             <h2>Made by hand, made with care</h2>
             <p>
@@ -253,15 +247,8 @@ function Home() {
       <section className="section burn-guide">
         <div className="container burn-guide__grid">
           <div className="burn-guide__image" aria-hidden="true">
-            <svg viewBox="0 0 200 200">
-              <circle cx="100" cy="100" r="96" fill="var(--color-cream-deep)" />
-              <ellipse cx="100" cy="52" rx="9" ry="15" fill="var(--color-gold)" opacity="0.9" />
-              <ellipse cx="100" cy="58" rx="4.5" ry="8" fill="#fff4da" opacity="0.9" />
-              <rect x="72" y="70" width="56" height="80" rx="10" fill="var(--color-white)" opacity="0.75" />
-              <rect x="72" y="70" width="56" height="80" rx="10" fill="none" stroke="var(--color-brown)" strokeOpacity="0.25" />
-              <line x1="100" y1="70" x2="100" y2="58" stroke="var(--color-charcoal)" strokeWidth="2" />
-            </svg>
-          </div>
+          <SingleCandle />
+        </div>
           <div>
             <div className="section-head">
               <h2>How to Burn Your Candle</h2>

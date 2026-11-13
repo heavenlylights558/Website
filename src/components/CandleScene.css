@@ -1,0 +1,111 @@
+/* Shared look + animation for the animated candle illustrations */
+.candle-scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Flame flicker */
+.fc-flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flameFlicker 1.9s ease-in-out infinite;
+}
+
+.fc-flame__core {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: coreFlicker 1.3s ease-in-out infinite;
+}
+
+.fc-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* Smoke wisps */
+.fc-smoke path {
+  stroke-dasharray: 70;
+  stroke-dashoffset: 70;
+  opacity: 0;
+  animation: smokeRise 5s ease-in-out infinite;
+}
+
+/* On light backgrounds the smoke is drawn in warm grey so it stays visible */
+.page-hero__candles .fc-smoke,
+.about-hero__image .fc-smoke,
+.about-snippet__image .fc-smoke,
+.burn-guide__image .fc-smoke {
+  stroke: #b9a98a;
+}
+
+@keyframes flameFlicker {
+  0%, 100% { transform: scale(1, 1) skewX(0deg); }
+  20% { transform: scale(0.95, 1.07) skewX(2.5deg); }
+  40% { transform: scale(1.04, 0.95) skewX(-2deg); }
+  60% { transform: scale(0.97, 1.05) skewX(1.5deg); }
+  80% { transform: scale(1.02, 0.97) skewX(-1deg); }
+}
+
+@keyframes coreFlicker {
+  0%, 100% { transform: scale(1, 1); opacity: 0.92; }
+  50% { transform: scale(0.9, 1.1); opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.75; transform: scale(0.94); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes smokeRise {
+  0% { stroke-dashoffset: 70; opacity: 0; transform: translateY(8px); }
+  25% { opacity: 0.45; }
+  70% { opacity: 0.2; }
+  100% { stroke-dashoffset: -70; opacity: 0; transform: translateY(-12px); }
+}
+
+/* Candles beside the page headings (Products, Catalogue, Categories, Contact) */
+.page-hero--candles {
+  position: relative;
+}
+
+.page-hero__candles {
+  position: absolute;
+  right: 32px;
+  bottom: 16px;
+  width: min(320px, 30%);
+  pointer-events: none;
+}
+
+/* Candles that replace the placeholder pictures on Home and About */
+.about-hero__image .candle-scene,
+.about-snippet__image .candle-scene {
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.burn-guide__image .candle-scene--single {
+  max-width: 190px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 960px) {
+  .page-hero__candles {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fc-flame,
+  .fc-flame__core,
+  .fc-glow {
+    animation: none;
+  }
+  .fc-smoke {
+    display: none;
+  }
+}

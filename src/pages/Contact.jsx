@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../components/Button";
+import { CandleCluster, SingleCandle } from "../components/CandleScene";
 import "./Contact.css";
 
 const initialForm = {
@@ -28,7 +29,10 @@ function Contact() {
 
   return (
     <div className="contact-page">
-      <div className="container page-hero">
+      <div className="container page-hero page-hero--candles">
+        <div className="page-hero__candles" aria-hidden="true">
+          <CandleCluster />
+        </div>
         <span className="eyebrow-plain">Get in Touch</span>
         <h1>Contact Us</h1>
         <p>

@@ -32,9 +32,13 @@ const labelFiles = import.meta.glob("../assets/labels/*.webp", {
   import: "default",
 });
 
-// labelImage("lavender", 150) -> URL of the 150g Lavender label (or undefined)
-export function labelImage(productId, grams) {
-  return labelFiles[`../assets/labels/${productId}-${grams}.webp`];
+// labelImage("lavender", 150)                      -> clean label (no price box), used on cards
+// labelImage("lavender", 150, { withPrice: true })  -> label with the MRP box, used on product pages
+// If a version is missing, the other one is used instead.
+export function labelImage(productId, grams, { withPrice = false } = {}) {
+  const clean = labelFiles[`../assets/labels/${productId}-${grams}-noprice.webp`];
+  const priced = labelFiles[`../assets/labels/${productId}-${grams}.webp`];
+  return withPrice ? priced || clean : clean || priced;
 }
 
 // Category id -> image (ids come from src/data/categories.js)

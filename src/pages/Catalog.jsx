@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import products, { sizeTiers, formatPrice } from "../data/products";
 import { flavours, labelImage } from "../data/artwork";
+import { CandleCluster, SingleCandle } from "../components/CandleScene";
 import "./Catalog.css";
 
 // The apple product uses the "apple" icon from the fragrance set.
@@ -17,7 +18,10 @@ function Catalog() {
 
   return (
     <div className="catalog-page">
-      <div className="container page-hero">
+      <div className="container page-hero page-hero--candles">
+        <div className="page-hero__candles" aria-hidden="true">
+          <CandleCluster />
+        </div>
         <span className="eyebrow-plain">Full Range</span>
         <h1>Candle Catalogue</h1>
         <p>

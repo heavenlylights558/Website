@@ -1,11 +1,15 @@
 import ProductCard from "../components/ProductCard";
 import products from "../data/products";
+import { CandleCluster, SingleCandle } from "../components/CandleScene";
 import "./Products.css";
 
 function Products() {
   return (
     <div className="products-page">
-      <div className="container page-hero">
+      <div className="container page-hero page-hero--candles">
+        <div className="page-hero__candles" aria-hidden="true">
+          <CandleCluster />
+        </div>
         <span className="eyebrow-plain">Our Collection</span>
         <h1>All Candles</h1>
         <p>

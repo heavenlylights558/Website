@@ -1,3 +1,4 @@
+import { CandleCluster, SingleCandle } from "../components/CandleScene";
 import "./About.css";
 
 function About() {
@@ -14,11 +15,7 @@ function About() {
           </p>
         </div>
         <div className="about-hero__image" aria-hidden="true">
-          <svg viewBox="0 0 240 240">
-            <circle cx="120" cy="120" r="112" fill="var(--color-cream)" />
-            <ellipse cx="120" cy="70" rx="14" ry="22" fill="var(--color-gold)" />
-            <rect x="82" y="96" width="76" height="96" rx="14" fill="var(--color-cream-deep)" />
-          </svg>
+          <CandleCluster />
         </div>
       </div>
 
