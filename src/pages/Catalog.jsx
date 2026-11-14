@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
+import SizeCompare from "../components/SizeCompare";
 import products, { sizeTiers, formatPrice } from "../data/products";
 import { flavours, labelImage } from "../data/artwork";
 import { CandleCluster, SingleCandle } from "../components/CandleScene";
@@ -30,24 +31,9 @@ function Catalog() {
         </p>
       </div>
 
-      {/* Sizes at a glance */}
-      <section className="container catalog-sizes" aria-label="Sizes and prices">
-        {sizeTiers.map((item) => (
-          <div className="catalog-size" key={item.grams}>
-            {item.grams === 250 && <span className="catalog-size__tag">Best value</span>}
-            <span className="catalog-size__weight">{item.grams}g</span>
-            <dl>
-              <div>
-                <dt>Burn time</dt>
-                <dd>{item.hours} hours</dd>
-              </div>
-              <div>
-                <dt>MRP</dt>
-                <dd>{formatPrice(item.price)}</dd>
-              </div>
-            </dl>
-          </div>
-        ))}
+      {/* Size comparison */}
+      <section className="container catalog-sizes-wrap" aria-label="Sizes and prices">
+        <SizeCompare />
       </section>
 
       {/* All fragrances, switchable by size */}

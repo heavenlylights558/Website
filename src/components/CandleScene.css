@@ -25,6 +25,12 @@
   animation: glowPulse 3s ease-in-out infinite;
 }
 
+/* Bubbles drifting up through the gel */
+.gel-bubble {
+  opacity: 0;
+  animation: bubbleRise 6.5s ease-in infinite;
+}
+
 /* Smoke wisps */
 .fc-smoke path {
   stroke-dasharray: 70;
@@ -39,6 +45,12 @@
 .about-snippet__image .fc-smoke,
 .burn-guide__image .fc-smoke {
   stroke: #b9a98a;
+}
+
+@keyframes bubbleRise {
+  0% { opacity: 0; transform: translateY(0); }
+  15% { opacity: 0.7; }
+  100% { opacity: 0; transform: translateY(calc(var(--rise) * -1)); }
 }
 
 @keyframes flameFlicker {
@@ -105,7 +117,8 @@
   .fc-glow {
     animation: none;
   }
-  .fc-smoke {
+  .fc-smoke,
+  .gel-bubble {
     display: none;
   }
 }

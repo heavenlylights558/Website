@@ -1,10 +1,18 @@
 import { useId } from "react";
 import "./CandleScene.css";
 
-// Reusable animated candle illustrations.
-//   <CandleCluster />  - a group of five lit candles on a gold tray
-//   <SingleCandle />   - one lit jar candle
-// Each flame flickers on its own timing; smoke and glow are animated in CandleScene.css.
+// Animated gel wax candle illustrations (clear glass tumblers filled with coloured gel,
+// like the Heavenly Lights gel candles).
+//   <CandleCluster />  - a group of five lit gel candles on a gold tray
+//   <SingleCandle />   - one large lit gel candle
+//   <GelCandle />      - one gel candle of any size (used for the size comparison)
+// Flames flicker, bubbles rise through the gel and smoke curls up (see CandleScene.css).
+
+const GEL = {
+  blue: ["#3d7dff", "#0a3aa6"],
+  red: ["#f25a3c", "#a31212"],
+  amber: ["#fcd45a", "#dc9a17"],
+};
 
 function Defs({ id }) {
   return (
@@ -14,25 +22,6 @@ function Defs({ id }) {
         <stop offset="45%" stopColor="#f3b84a" stopOpacity="0.35" />
         <stop offset="100%" stopColor="#f3b84a" stopOpacity="0" />
       </radialGradient>
-      <linearGradient id={`${id}-wax`} x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#f7d98a" />
-        <stop offset="100%" stopColor="#e0a43a" />
-      </linearGradient>
-      <linearGradient id={`${id}-ivory`} x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stopColor="#efe2c4" />
-        <stop offset="45%" stopColor="#fffaf0" />
-        <stop offset="100%" stopColor="#e6d5b0" />
-      </linearGradient>
-      <linearGradient id={`${id}-navy`} x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stopColor="#1f2e4d" />
-        <stop offset="45%" stopColor="#35497a" />
-        <stop offset="100%" stopColor="#1a2640" />
-      </linearGradient>
-      <linearGradient id={`${id}-amber`} x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stopColor="#d9962b" />
-        <stop offset="45%" stopColor="#f6c35c" />
-        <stop offset="100%" stopColor="#c98a1f" />
-      </linearGradient>
       <linearGradient id={`${id}-tray`} x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stopColor="#f3dd9a" />
         <stop offset="100%" stopColor="#b8932f" />
@@ -42,6 +31,12 @@ function Defs({ id }) {
         <stop offset="55%" stopColor="#ffd86b" />
         <stop offset="100%" stopColor="#fff6c8" />
       </linearGradient>
+      {Object.entries(GEL).map(([name, [top, bottom]]) => (
+        <linearGradient key={name} id={`${id}-gel-${name}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={top} />
+          <stop offset="100%" stopColor={bottom} />
+        </linearGradient>
+      ))}
     </defs>
   );
 }
@@ -91,8 +86,97 @@ function Smoke({ cx, tip, delay = "0s" }) {
   );
 }
 
+// Fixed little bubbles inside the gel (as fractions of the gel area).
+const STATIC_BUBBLES = [
+  [0.18, 0.22, 1.5], [0.72, 0.16, 1.2], [0.30, 0.46, 1.8], [0.80, 0.40, 1.4],
+  [0.22, 0.70, 1.3], [0.66, 0.62, 1.9], [0.84, 0.82, 1.2], [0.40, 0.88, 1.5],
+];
+
+// A clear glass tumbler filled with gel, a wick column, a label and a flame.
+function GelGlass({ id, cx, base, w, h, color, flame = 0.8, delay = "0s", label = false }) {
+  const x = cx - w / 2;
+  const top = base - h;
+  const gelTop = top + 12;
+  const gelX = x + 2.5;
+  const gelW = w - 5;
+  const gelH = base - 7 - gelTop;
+  const labelH = 24;
+  const labelY = gelTop + (gelH - labelH) / 2 + 3;
+
+  return (
+    <g>
+      {/* glass + gel */}
+      <rect x={x} y={top} width={w} height={h} rx="6" fill="#ffffff" fillOpacity="0.1" />
+      <rect x={gelX} y={gelTop} width={gelW} height={gelH} rx="3" fill={`url(#${id}-gel-${color})`} />
+      <ellipse cx={cx} cy={gelTop} rx={gelW / 2} ry="3.2" fill="#ffffff" fillOpacity="0.28" />
+      <rect x={gelX} y={base - 10} width={gelW} height="7" rx="3" fill="#ffffff" fillOpacity="0.3" />
+
+      {/* wick column */}
+      <rect x={cx - 1.8} y={gelTop} width="3.6" height={base - 10 - gelTop} fill="#ffffff" fillOpacity="0.4" />
+
+      {/* bubbles */}
+      {STATIC_BUBBLES.map(([fx, fy, r], index) => (
+        <circle
+          key={index}
+          cx={gelX + fx * gelW}
+          cy={gelTop + fy * gelH}
+          r={r}
+          fill="#ffffff"
+          fillOpacity="0.35"
+        />
+      ))}
+      {[0.25, 0.6, 0.8].map((fx, index) => (
+        <circle
+          key={`rise-${index}`}
+          className="gel-bubble"
+          cx={gelX + fx * gelW}
+          cy={base - 14}
+          r="1.7"
+          fill="#ffffff"
+          style={{ "--rise": `${gelH * 0.7}px`, animationDelay: `${index * 1.7}s` }}
+        />
+      ))}
+
+      {/* label */}
+      {label && (
+        <g>
+          <rect x={cx - 15} y={labelY} width="30" height={labelH} rx="1.5" fill="#fbf1dc" stroke="#d8c08a" strokeWidth="0.6" />
+          <path d={`M${cx} ${labelY + 3.5} c2 2.6 3 4 3 5.4 a3 3 0 1 1 -6 0 c0 -1.4 1 -2.8 3 -5.4 Z`} fill="#c6a03c" />
+          <text x={cx} y={labelY + 16.5} textAnchor="middle" fontFamily="Fraunces, Georgia, serif" fontStyle="italic" fontSize="6.4" fill="#1f2e4d">
+            Heavenly
+          </text>
+          <text x={cx} y={labelY + 21.5} textAnchor="middle" fontFamily="Fraunces, Georgia, serif" fontSize="4.8" fill="#1f2e4d">
+            Lights
+          </text>
+        </g>
+      )}
+
+      {/* glass outline + highlight on top */}
+      <rect x={x} y={top} width={w} height={h} rx="6" fill="none" stroke="#ffffff" strokeOpacity="0.7" strokeWidth="1.4" />
+      <rect x={x + 5} y={gelTop + 4} width="3.5" height={gelH - 10} rx="1.75" fill="#ffffff" fillOpacity="0.3" />
+
+      {/* wick + flame */}
+      <line x1={cx} y1={gelTop} x2={cx} y2={gelTop - 6} stroke="#2b2622" strokeWidth="2" strokeLinecap="round" />
+      <Flame id={id} cx={cx} base={gelTop - 4} scale={flame} delay={delay} duration={`${1.5 + flame}s`} />
+    </g>
+  );
+}
+
+const glowFor = (id, cx, base, h, flame, delay) => (
+  <Glow id={id} cx={cx} cy={base - h + 8 - 24 * flame} r={26 + 34 * flame} delay={delay} />
+);
+
 export function CandleCluster({ className = "" }) {
   const id = useId().replace(/:/g, "");
+
+  // [cx, width, height, colour, flame scale, delay, label]
+  const glasses = [
+    [92, 56, 118, "blue", 0.85, "0.9s", true],
+    [218, 56, 108, "amber", 0.82, "1.3s", true],
+    [36, 46, 62, "amber", 0.55, "0.3s", false],
+    [156, 60, 86, "red", 0.8, "0s", true],
+    [270, 44, 66, "blue", 0.55, "0.6s", false],
+  ];
 
   return (
     <svg
@@ -103,61 +187,33 @@ export function CandleCluster({ className = "" }) {
     >
       <Defs id={id} />
 
-      {/* Glows sit behind everything */}
-      <Glow id={id} cx={150} cy={88} r={66} />
-      <Glow id={id} cx={92} cy={58} r={52} delay="0.7s" />
-      <Glow id={id} cx={210} cy={84} r={50} delay="1.4s" />
-      <Glow id={id} cx={40} cy={132} r={36} delay="0.4s" />
-      <Glow id={id} cx={262} cy={140} r={34} delay="1.1s" />
+      {glasses.map(([cx, w, h, , flame, delay], index) => (
+        <g key={`glow-${index}`}>{glowFor(id, cx, 224, h, flame, delay)}</g>
+      ))}
 
-      <Smoke cx={150} tip={60} />
-      <Smoke cx={92} tip={36} delay="1.8s" />
-      <Smoke cx={210} tip={66} delay="3.2s" />
+      <Smoke cx={92} tip={64} delay="0s" />
+      <Smoke cx={218} tip={60} delay="2.2s" />
+      <Smoke cx={156} tip={86} delay="3.4s" />
 
       {/* Shadow + gold tray */}
       <ellipse cx="150" cy="241" rx="138" ry="6" fill="#000000" opacity="0.18" />
       <rect x="8" y="224" width="284" height="10" rx="5" fill={`url(#${id}-tray)`} />
       <rect x="14" y="225" width="272" height="2" rx="1" fill="#ffffff" opacity="0.35" />
 
-      {/* Left votive */}
-      <rect x="20" y="166" width="40" height="60" rx="9" fill={`url(#${id}-ivory)`} />
-      <rect x="20" y="192" width="40" height="5" fill="#c6a03c" opacity="0.85" />
-      <ellipse cx="40" cy="167" rx="20" ry="4" fill="#fff6dc" />
-      <line x1="40" y1="167" x2="40" y2="155" stroke="#2b2622" strokeWidth="2.2" strokeLinecap="round" />
-      <Flame id={id} cx={40} base={156} scale={0.6} delay="0.3s" duration="1.6s" />
-
-      {/* Tall ivory pillar with drips */}
-      <rect x="75" y="100" width="34" height="126" rx="8" fill={`url(#${id}-ivory)`} />
-      <rect x="77" y="100" width="7" height="30" rx="3.5" fill="#fffaf0" />
-      <rect x="99" y="100" width="7" height="18" rx="3.5" fill="#fffaf0" />
-      <rect x="75" y="168" width="34" height="5" fill="#c6a03c" opacity="0.85" />
-      <ellipse cx="92" cy="101" rx="17" ry="4" fill="#fff6dc" />
-      <line x1="92" y1="101" x2="92" y2="89" stroke="#2b2622" strokeWidth="2.2" strokeLinecap="round" />
-      <Flame id={id} cx={92} base={90} scale={0.9} delay="0.9s" duration="2.1s" />
-
-      {/* Centre jar candle (matches the logo) */}
-      <rect x="112" y="118" width="76" height="108" rx="16" fill="#1f2e4d" />
-      <rect x="119" y="125" width="62" height="94" rx="10" fill={`url(#${id}-wax)`} />
-      <ellipse cx="150" cy="128" rx="31" ry="5.5" fill="#fbe7a8" />
-      <rect x="147" y="152" width="6" height="40" rx="2" fill="#fff8e6" />
-      <rect x="137" y="162" width="26" height="6" rx="2" fill="#fff8e6" />
-      <path d="M117 122 h66" stroke="#ffffff" strokeOpacity="0.25" strokeWidth="2" />
-      <line x1="150" y1="128" x2="150" y2="114" stroke="#2b2622" strokeWidth="2.5" strokeLinecap="round" />
-      <Flame id={id} cx={150} base={115} scale={1} delay="0s" duration="1.9s" />
-
-      {/* Navy pillar with gold bands */}
-      <rect x="191" y="130" width="38" height="96" rx="8" fill={`url(#${id}-navy)`} />
-      <rect x="191" y="152" width="38" height="4" fill="#c6a03c" />
-      <rect x="191" y="198" width="38" height="4" fill="#c6a03c" />
-      <ellipse cx="210" cy="131" rx="19" ry="4" fill="#4a608f" />
-      <line x1="210" y1="131" x2="210" y2="119" stroke="#2b2622" strokeWidth="2.2" strokeLinecap="round" />
-      <Flame id={id} cx={210} base={120} scale={0.85} delay="1.3s" duration="1.8s" />
-
-      {/* Right votive */}
-      <rect x="242" y="172" width="40" height="54" rx="9" fill={`url(#${id}-amber)`} />
-      <ellipse cx="262" cy="173" rx="20" ry="4" fill="#ffe3a0" />
-      <line x1="262" y1="173" x2="262" y2="162" stroke="#2b2622" strokeWidth="2.2" strokeLinecap="round" />
-      <Flame id={id} cx={262} base={163} scale={0.55} delay="0.6s" duration="1.5s" />
+      {glasses.map(([cx, w, h, color, flame, delay, label], index) => (
+        <GelGlass
+          key={index}
+          id={id}
+          cx={cx}
+          base={224}
+          w={w}
+          h={h}
+          color={color}
+          flame={flame}
+          delay={delay}
+          label={label}
+        />
+      ))}
     </svg>
   );
 }
@@ -173,18 +229,29 @@ export function SingleCandle({ className = "" }) {
       focusable="false"
     >
       <Defs id={id} />
-      <Glow id={id} cx={80} cy={92} r={70} />
-      <Smoke cx={80} tip={58} />
+      <Glow id={id} cx={80} cy={86} r={74} />
+      <Smoke cx={80} tip={56} />
+      <ellipse cx="80" cy="232" rx="56" ry="6" fill="#000000" opacity="0.18" />
+      <GelGlass id={id} cx={80} base={228} w={88} h={128} color="amber" flame={1.05} label />
+    </svg>
+  );
+}
 
-      <ellipse cx="80" cy="230" rx="52" ry="6" fill="#000000" opacity="0.18" />
-      <rect x="38" y="118" width="84" height="108" rx="16" fill="#1f2e4d" />
-      <rect x="45" y="125" width="70" height="94" rx="11" fill={`url(#${id}-wax)`} />
-      <ellipse cx="80" cy="128" rx="35" ry="6" fill="#fbe7a8" />
-      <rect x="77" y="152" width="6" height="42" rx="2" fill="#fff8e6" />
-      <rect x="66" y="162" width="28" height="6" rx="2" fill="#fff8e6" />
-      <path d="M44 122 h72" stroke="#ffffff" strokeOpacity="0.25" strokeWidth="2" />
-      <line x1="80" y1="128" x2="80" y2="113" stroke="#2b2622" strokeWidth="2.5" strokeLinecap="round" />
-      <Flame id={id} cx={80} base={115} scale={1.05} />
+// One gel candle of any size, drawn on its own so sizes can be compared side by side.
+export function GelCandle({ color = "red", w = 60, h = 90, flame = 0.8, label = true, className = "" }) {
+  const id = useId().replace(/:/g, "");
+
+  return (
+    <svg
+      viewBox="0 0 140 220"
+      className={`candle-scene gel-candle ${className}`}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <Defs id={id} />
+      <Glow id={id} cx={70} cy={206 - h + 8 - 24 * flame} r={26 + 34 * flame} />
+      <ellipse cx="70" cy="210" rx={w / 2 + 14} ry="5" fill="#000000" opacity="0.16" />
+      <GelGlass id={id} cx={70} base={206} w={w} h={h} color={color} flame={flame} label={label} />
     </svg>
   );
 }

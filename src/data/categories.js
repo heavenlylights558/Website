@@ -6,10 +6,10 @@ const categories = [
       "Fragrance-forward candles crafted to fill a room with a single, well-balanced scent.",
   },
   {
-    id: "soy",
-    name: "Soy Candles",
+    id: "gel",
+    name: "Gel Wax Candles",
     description:
-      "Made from natural soy wax for a clean, even burn with minimal soot.",
+      "Transparent gel wax in vivid colours — crystal clear, smokeless and clean burning.",
   },
   {
     id: "jar",

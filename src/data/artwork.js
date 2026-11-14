@@ -9,7 +9,7 @@ import lemon from "../assets/flavours/lemon.webp";
 import vanilla from "../assets/flavours/vanilla.webp";
 import jasmine from "../assets/flavours/jasmine.webp";
 
-import candlePlain from "../assets/candles/plain.webp";
+import candleGelWax from "../assets/candles/gel-wax.webp";
 import candleDevotional from "../assets/candles/devotional.webp";
 import candleAutumn from "../assets/candles/autumn.webp";
 import candleAdventWreath from "../assets/candles/advent-wreath.webp";
@@ -44,7 +44,7 @@ export function labelImage(productId, grams, { withPrice = false } = {}) {
 // Category id -> image (ids come from src/data/categories.js)
 export const categoryArt = {
   scented: candleAutumn,
-  soy: candlePlain,
+  gel: candleGelWax,
   jar: candleDevotional,
   decorative: candleAdventCalendar,
   gift: rose,

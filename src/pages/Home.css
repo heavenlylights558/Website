@@ -68,10 +68,10 @@
 .hero__candle {
   position: relative;
   z-index: 1;
-  width: min(420px, 90%);
+  width: min(540px, 100%);
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 20px 40px rgba(107, 84, 57, 0.25));
+  filter: none;
 }
 
 /* Grids */

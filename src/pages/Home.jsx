@@ -4,11 +4,12 @@ import ProductCard from "../components/ProductCard";
 import CategoryCard from "../components/CategoryCard";
 import products from "../data/products";
 import categories from "../data/categories";
-import heroCandles from "../assets/festive-candles.png";
+import heroCandles from "../assets/hero-gel-candles.webp";
 import iconNaturalWax from "../assets/icon-natural-wax.png";
 import iconMadeInIndia from "../assets/icon-made-in-india.png";
 import iconBurnTime from "../assets/icon-burn-time.webp";
 import FragranceStrip from "../components/FragranceStrip";
+import SizeCompare from "../components/SizeCompare";
 import { CandleCluster, SingleCandle } from "../components/CandleScene";
 import "./Home.css";
 
@@ -22,7 +23,7 @@ const reasons = [
   },
   {
     title: "Clean-burning ingredients",
-    text: "We use a soy wax blend and cotton wicks, chosen for an even burn and a room that stays clear.",
+    text: "Our transparent gel wax burns clean and smokeless, so the room stays fresh from the first light to the last.",
   },
   {
     title: "Fragrance that lasts",
@@ -50,8 +51,8 @@ const testimonials = [
 
 const differentiators = [
   {
-    title: "Natural Soy Wax",
-    text: "Clean-burning, plant-based wax with no paraffin or synthetic fillers.",
+    title: "Transparent Gel Wax",
+    text: "Crystal clear, smokeless and clean burning.",
     image: iconNaturalWax,
   },
   {
@@ -119,7 +120,7 @@ function Home() {
             <span className="hero__eyebrow">Heavenly Lights</span>
             <h1>Light Up Your Moments</h1>
             <p>
-              Hand-poured candles crafted from natural soy wax and thoughtful
+              Hand-poured candles crafted from clear gel wax and thoughtful
               fragrance blends — made to turn an ordinary evening into a
               little occasion.
             </p>
@@ -184,6 +185,13 @@ function Home() {
 
       {/* Signature fragrances */}
       <FragranceStrip />
+
+      {/* Choose your size */}
+      <section className="section size-compare-section">
+        <div className="container">
+          <SizeCompare heading cta />
+        </div>
+      </section>
 
       {/* Categories */}
       <section className="section section--alt">
